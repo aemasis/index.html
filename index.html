@@ -730,16 +730,8 @@
       const [lng, lat] = coordEl.textContent.trim().split(',').map(Number);
       if (!lat || !lng) return;
 
-      const name = pm.querySelector('name')?.textContent || '';
       const rawDesc = pm.querySelector('description')?.textContent || '';
       const cleanDesc = rawDesc.replace(/<img[^>]*>/gi,'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().substring(0, 240);
-
-      let taxonomy = '';
-      pm.querySelectorAll('Data').forEach(d => {
-        if (d.getAttribute('name') === 'Taxonomy1') {
-          taxonomy = d.querySelector('value')?.textContent?.trim() || '';
-        }
-      });
 
       const sublayer = taxonomy.includes(' - ') ? taxonomy.split(' - ')[1].trim() : taxonomy;
       const iconUrl  = ICON_MAP[sublayer] || ICON_MAP[taxonomy] || null;
