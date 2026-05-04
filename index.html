@@ -501,7 +501,10 @@
 </div>
 
 <script>
-  // ── Page navigation ──────────────────────────────────────────
+  // ── State ─────────────────────────────────────────────────────
+  let _mapsApiReady = false;
+
+  // ── Page navigation ───────────────────────────────────────────
   function enterSite() { showPage('map-page'); }
 
   function showPage(id) {
@@ -512,87 +515,160 @@
     if (id === 'map-page') {
       document.getElementById('nav-map')?.classList.add('active');
       document.getElementById('nav-map-2')?.classList.add('active');
-      // Initialize map the first time we show the map page
-      if (!window._mapInitialized) initMap();
+      // Only init if the Maps API has already loaded; otherwise _mapsReady will handle it
+      if (!window._mapInitialized && _mapsApiReady) initMap();
     } else {
       document.getElementById('nav-about')?.classList.add('active');
       document.getElementById('nav-about-2')?.classList.add('active');
     }
   }
 
-  // ── Google Maps + KML layer setup ────────────────────────────
-  const MAP_ID   = '1NnIetKVQmo1lOo0PXMMqfxEmNMh5xlE';
-  const API_KEY  = 'AIzaSyAs1fqmi-0uCtYrzWVF9ut58COAHBZIFHw';
+  // ── Config ────────────────────────────────────────────────────
+  const MAP_ID  = '1NnIetKVQmo1lOo0PXMMqfxEmNMh5xlE';
+  const API_KEY = 'AIzaSyAs1fqmi-0uCtYrzWVF9ut58COAHBZIFHw';
 
-  // Map each sidebar checkbox data-layer value → the exact My Maps layer/folder name
-  const LAYER_NAMES = {
-    'nature':      'Nature',
-    'worlds-fair': 'World\'s Columbian Exposition',
-    'history':     'History & Culture'
+  const LAYER_STYLES = {
+    'nature':      { color: '#6b9e78', markerColor: '#4a7a57' },
+    'worlds-fair': { color: '#c49a6c', markerColor: '#a07840' },
+    'history':     { color: '#7a8fc4', markerColor: '#4a5fa0' }
   };
 
-  let map;
-  let kmlLayers = {};   // keyed by data-layer value
+  let map, infoWindow;
+  let overlayFeatures = { 'nature': [], 'worlds-fair': [], 'history': [] };
+  let kmlLayer;
 
+  // ── Map init ──────────────────────────────────────────────────
   function initMap() {
     window._mapInitialized = true;
 
     map = new google.maps.Map(document.getElementById('gmap'), {
       center: { lat: 41.7854, lng: -87.5827 },
-      zoom: 16,
+      zoom: 15,
       mapTypeId: 'roadmap',
-      mapTypeControl: false,
+      mapTypeControl: true,
+      mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
       streetViewControl: false,
       fullscreenControl: true,
-      zoomControlOptions: {
-        position: google.maps.ControlPosition.RIGHT_CENTER
-      },
+      zoomControlOptions: { position: google.maps.ControlPosition.RIGHT_CENTER },
       styles: [
         { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] },
-        { featureType: 'transit', stylers: [{ visibility: 'simplified' }] },
-        { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] }
+        { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+        { featureType: 'transit', stylers: [{ visibility: 'simplified' }] }
       ]
     });
 
-    // Load each layer as a separate KmlLayer using the folder name as a query param.
-    // Google My Maps exposes individual layers via the kmlexport endpoint with layer= param.
-    Object.entries(LAYER_NAMES).forEach(([key, name]) => {
-      const src = `https://www.google.com/maps/d/kml?mid=${MAP_ID}&forcekml=1`;
-      const layer = new google.maps.KmlLayer({
-        url: src,
-        map: map,
-        preserveViewport: true,
-        suppressInfoWindows: false
-      });
-      kmlLayers[key] = layer;
+    infoWindow = new google.maps.InfoWindow();
+
+    // Load My Maps KML on top as base reference layer
+    kmlLayer = new google.maps.KmlLayer({
+      url: `https://www.google.com/maps/d/kml?mid=${MAP_ID}&forcekml=1`,
+      map: map,
+      preserveViewport: true,
+      suppressInfoWindows: false
+    });
+
+    // Load and render our custom GeoJSON overlay
+    fetch('map-data.geojson')
+      .then(r => r.json())
+      .then(geojson => renderGeoJSON(geojson))
+      .catch(err => console.warn('GeoJSON load failed (expected on local file://):', err));
+  }
+
+  // ── GeoJSON renderer ──────────────────────────────────────────
+  function renderGeoJSON(geojson) {
+    geojson.features.forEach(feature => {
+      const props  = feature.properties;
+      const layer  = props.layer;
+      const style  = LAYER_STYLES[layer];
+      const geom   = feature.geometry;
+
+      if (geom.type === 'Polygon') {
+        const coords = geom.coordinates[0].map(([lng, lat]) => ({ lat, lng }));
+        const polygon = new google.maps.Polygon({
+          paths: coords,
+          map: map,
+          strokeColor: style.color,
+          strokeOpacity: 0.85,
+          strokeWeight: 2,
+          fillColor: style.color,
+          fillOpacity: 0.18
+        });
+
+        polygon.addListener('click', e => showInfo(props, e.latLng));
+        polygon.addListener('mouseover', () => polygon.setOptions({ fillOpacity: 0.35 }));
+        polygon.addListener('mouseout',  () => polygon.setOptions({ fillOpacity: 0.18 }));
+        overlayFeatures[layer].push(polygon);
+
+      } else if (geom.type === 'Point') {
+        const [lng, lat] = geom.coordinates;
+        const marker = new google.maps.Marker({
+          position: { lat, lng },
+          map: map,
+          title: props.name,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: style.markerColor,
+            fillOpacity: 1,
+            strokeColor: '#fff',
+            strokeWeight: 2,
+            scale: 8
+          }
+        });
+
+        marker.addListener('click', () => showInfo(props, marker.getPosition()));
+        overlayFeatures[layer].push(marker);
+      }
     });
   }
 
+  // ── Info window ───────────────────────────────────────────────
+  function showInfo(props, position) {
+    const style = LAYER_STYLES[props.layer];
+    const layerLabel = {
+      'nature':      'Nature',
+      'worlds-fair': "World's Columbian Exposition",
+      'history':     'History & Culture'
+    }[props.layer];
+
+    infoWindow.setContent(`
+      <div style="font-family:'DM Sans',sans-serif; max-width:280px; padding:4px 2px;">
+        <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+                    color:${style.color}; margin-bottom:6px;">${layerLabel}</div>
+        <div style="font-size:15px; font-weight:500; color:#111;
+                    margin-bottom:8px; line-height:1.3;">${props.name}</div>
+        <div style="font-size:12px; color:#444; line-height:1.6;">
+          ${props.description}
+        </div>
+      </div>
+    `);
+    infoWindow.setPosition(position);
+    infoWindow.open(map);
+  }
+
+  // ── Layer toggle ──────────────────────────────────────────────
   function toggleLayer(checkbox) {
-    const key   = checkbox.dataset.layer;
-    const isOn  = checkbox.checked;
-    if (kmlLayers[key]) {
-      kmlLayers[key].setMap(isOn ? map : null);
-    }
+    const key  = checkbox.dataset.layer;
+    const isOn = checkbox.checked;
+    (overlayFeatures[key] || []).forEach(f => f.setMap(isOn ? map : null));
   }
 
-  // Load the Maps JS API after the page is ready
-  function loadMapsAPI() {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=_mapsReady`;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-  }
+  // ── Load Maps API ─────────────────────────────────────────────
 
-  // Called by the Maps API once loaded
+  // Called by Google when the API script finishes loading
   window._mapsReady = function() {
-    // Map will init when user navigates to the map page
-    // (already on map page if they refreshed — handle that too)
-    if (document.getElementById('map-page').classList.contains('active')) {
+    _mapsApiReady = true;
+    // If the user already clicked Enter before the API loaded, init now
+    if (document.getElementById('map-page').classList.contains('active') && !window._mapInitialized) {
       initMap();
     }
   };
+
+  function loadMapsAPI() {
+    const s = document.createElement('script');
+    s.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=_mapsReady&loading=async`;
+    s.async = true;
+    document.head.appendChild(s);
+  }
 
   window.addEventListener('DOMContentLoaded', loadMapsAPI);
 </script>
