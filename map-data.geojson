@@ -1,0 +1,391 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+
+    // ═══════════════════════════════════════
+    // NATURE LAYER — polygons
+    // ═══════════════════════════════════════
+
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "nature",
+        "type": "polygon",
+        "name": "Wooded Island / Paul H. Douglas Nature Sanctuary",
+        "description": "A restored native plant sanctuary and premier birding site, the Wooded Island sits at the heart of Jackson Park's lagoon system. Once the site of the Japanese Pavilion at the 1893 World's Fair, it was restored as an ecological habitat beginning in 2015 under the Army Corps of Engineers' Great Lakes Fisheries & Ecosystem Restoration program. Over 100 bird species have been recorded here."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5823, 41.7878],
+          [-87.5810, 41.7878],
+          [-87.5803, 41.7868],
+          [-87.5803, 41.7852],
+          [-87.5810, 41.7843],
+          [-87.5823, 41.7840],
+          [-87.5835, 41.7845],
+          [-87.5840, 41.7856],
+          [-87.5837, 41.7868],
+          [-87.5828, 41.7876],
+          [-87.5823, 41.7878]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "nature",
+        "type": "polygon",
+        "name": "Bobolink Meadow",
+        "description": "A restored native grassland meadow that serves as critical stopover habitat for migratory songbirds including bobolinks, sparrows, and warblers. One of the few meadow habitats remaining on the South Side lakefront."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5775, 41.7910],
+          [-87.5758, 41.7910],
+          [-87.5752, 41.7900],
+          [-87.5755, 41.7890],
+          [-87.5768, 41.7885],
+          [-87.5780, 41.7890],
+          [-87.5782, 41.7900],
+          [-87.5775, 41.7910]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "nature",
+        "type": "polygon",
+        "name": "East Lagoon",
+        "description": "The park's primary lagoon, designed by Frederick Law Olmsted and Calvert Vaux. The lagoon provides open water habitat for waterfowl and migratory birds, and its restored shoreline supports native aquatic plants."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5845, 41.7875],
+          [-87.5830, 41.7882],
+          [-87.5815, 41.7880],
+          [-87.5803, 41.7870],
+          [-87.5800, 41.7857],
+          [-87.5803, 41.7843],
+          [-87.5815, 41.7835],
+          [-87.5828, 41.7833],
+          [-87.5845, 41.7840],
+          [-87.5855, 41.7855],
+          [-87.5852, 41.7868],
+          [-87.5845, 41.7875]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "nature",
+        "type": "polygon",
+        "name": "South Lagoon & Osaka Garden",
+        "description": "The south lagoon surrounds the Osaka Garden, a restored Japanese stroll garden that has existed on Wooded Island since the 1893 World's Fair. The lagoon and garden edges support diverse native plantings and migratory bird habitat."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5830, 41.7840],
+          [-87.5815, 41.7840],
+          [-87.5805, 41.7832],
+          [-87.5805, 41.7820],
+          [-87.5815, 41.7813],
+          [-87.5830, 41.7813],
+          [-87.5840, 41.7820],
+          [-87.5840, 41.7832],
+          [-87.5830, 41.7840]
+        ]]
+      }
+    },
+
+    // ═══════════════════════════════════════
+    // WORLD'S COLUMBIAN EXPOSITION LAYER — polygons
+    // ═══════════════════════════════════════
+
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "worlds-fair",
+        "type": "polygon",
+        "name": "Overall 1893 Fairgrounds Boundary",
+        "description": "The 1893 World's Columbian Exposition occupied approximately 600 acres of Jackson Park. Bounded by Stony Island Ave to the west, 67th St to the south, Lake Michigan to the east, and 56th St to the north, it drew over 27 million visitors in six months and transformed Chicago's identity on the world stage."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5930, 41.7935],
+          [-87.5760, 41.7935],
+          [-87.5720, 41.7910],
+          [-87.5700, 41.7870],
+          [-87.5700, 41.7800],
+          [-87.5720, 41.7760],
+          [-87.5760, 41.7740],
+          [-87.5930, 41.7740],
+          [-87.5950, 41.7770],
+          [-87.5960, 41.7840],
+          [-87.5950, 41.7900],
+          [-87.5930, 41.7935]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "worlds-fair",
+        "type": "polygon",
+        "name": "Court of Honor / Grand Basin",
+        "description": "The ceremonial heart of the White City — a formal reflecting basin flanked by the most monumental Beaux-Arts buildings of the fair, including the Administration Building, the Agricultural Building, and the Manufactures & Liberal Arts Building. The Grand Basin was the largest water feature at any fair to that date."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5810, 41.7870],
+          [-87.5790, 41.7870],
+          [-87.5780, 41.7858],
+          [-87.5780, 41.7843],
+          [-87.5790, 41.7833],
+          [-87.5810, 41.7833],
+          [-87.5820, 41.7843],
+          [-87.5820, 41.7858],
+          [-87.5810, 41.7870]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "worlds-fair",
+        "type": "polygon",
+        "name": "Palace of Fine Arts (now Museum of Science & Industry)",
+        "description": "The only fireproof building at the 1893 World's Fair and the only one still standing in its original location. Designed by Charles B. Atwood in Greek Revival style, it housed one of the finest art exhibitions in American history. It was rebuilt in limestone and marble in the 1930s by Julius Rosenwald and reopened as the Museum of Science and Industry."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5833, 41.7910],
+          [-87.5818, 41.7910],
+          [-87.5813, 41.7902],
+          [-87.5813, 41.7893],
+          [-87.5818, 41.7886],
+          [-87.5833, 41.7886],
+          [-87.5840, 41.7893],
+          [-87.5840, 41.7902],
+          [-87.5833, 41.7910]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "worlds-fair",
+        "type": "polygon",
+        "name": "Midway Plaisance",
+        "description": "The entertainment corridor of the 1893 fair, stretching west from Jackson Park along what is now the University of Chicago's campus. Home to the world's first Ferris Wheel, designed by George Washington Gale Ferris Jr., which stood 264 feet tall and carried 2,160 passengers at a time."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5930, 41.7930],
+          [-87.5930, 41.7910],
+          [-87.6050, 41.7910],
+          [-87.6150, 41.7910],
+          [-87.6150, 41.7930],
+          [-87.6050, 41.7930],
+          [-87.5930, 41.7930]
+        ]]
+      }
+    },
+
+    // ═══════════════════════════════════════
+    // HISTORY & CULTURE LAYER — polygons
+    // ═══════════════════════════════════════
+
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "history",
+        "type": "polygon",
+        "name": "Obama Presidential Center Site",
+        "description": "The future home of the Obama Presidential Center, currently under construction in the southwest corner of Jackson Park. Designed by Tod Williams Billie Tsien Architects with landscape by Michael Van Valkenburgh Associates, the OPC will include a museum, library branch, plaza, and community facilities on approximately 19 acres."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5930, 41.7830],
+          [-87.5900, 41.7830],
+          [-87.5888, 41.7818],
+          [-87.5888, 41.7800],
+          [-87.5900, 41.7790],
+          [-87.5930, 41.7790],
+          [-87.5943, 41.7800],
+          [-87.5943, 41.7818],
+          [-87.5930, 41.7830]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "history",
+        "type": "polygon",
+        "name": "63rd Street Beach & South Shore Cultural Corridor",
+        "description": "One of Chicago's historic lakefront beaches, 63rd Street Beach anchors the southern boundary of Jackson Park. The nearby South Shore Cultural Center — a former country club built in 1906 — is now a Chicago Park District landmark and community arts venue that has served the South Side for generations."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5720, 41.7780],
+          [-87.5700, 41.7780],
+          [-87.5695, 41.7768],
+          [-87.5700, 41.7755],
+          [-87.5715, 41.7750],
+          [-87.5728, 41.7755],
+          [-87.5730, 41.7768],
+          [-87.5720, 41.7780]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "history",
+        "type": "polygon",
+        "name": "Hayes Drive Historic Corridor",
+        "description": "Hayes Drive traverses the heart of Jackson Park following the original carriage routes of Olmsted's 1871 plan. The Statue of the Republic — a 1918 replica of the 65-foot original that stood at the 1893 fair — stands at the intersection of Hayes Drive and Richards Drive, marking the historic ceremonial axis of the White City."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.5870, 41.7865],
+          [-87.5760, 41.7865],
+          [-87.5755, 41.7857],
+          [-87.5760, 41.7848],
+          [-87.5870, 41.7848],
+          [-87.5875, 41.7857],
+          [-87.5870, 41.7865]
+        ]]
+      }
+    },
+
+    // ═══════════════════════════════════════
+    // MARKERS — all layers
+    // ═══════════════════════════════════════
+
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "nature",
+        "type": "marker",
+        "name": "Osaka Garden",
+        "description": "A traditional Japanese stroll garden reconstructed on Wooded Island after being vandalized during WWII. A gift from the city of Osaka, it is one of the most serene spots in Chicago."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5818, 41.7826] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "nature",
+        "type": "marker",
+        "name": "Paul H. Douglas Nature Sanctuary",
+        "description": "Named after Illinois senator and conservationist Paul H. Douglas, this sanctuary on Wooded Island is one of the best urban birding sites in the Midwest, particularly during spring and fall migrations."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5820, 41.7860] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "nature",
+        "type": "marker",
+        "name": "North Pond & Waterbird Habitat",
+        "description": "The north pond provides critical stopover habitat for migratory waterfowl. Herons, egrets, and a remarkable variety of ducks are regularly observed here during migration seasons."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5808, 41.7898] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "worlds-fair",
+        "type": "marker",
+        "name": "Museum of Science & Industry (former Palace of Fine Arts)",
+        "description": "The sole surviving building constructed specifically for the 1893 World's Columbian Exposition. Originally the Palace of Fine Arts, it is now one of the largest science museums in the Western Hemisphere."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5830, 41.7900] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "worlds-fair",
+        "type": "marker",
+        "name": "Statue of the Republic",
+        "description": "A 1918 gilded replica of the 65-foot 'Big Mary' statue that stood at the center of the 1893 Court of Honor. The original, sculpted by Daniel Chester French, was destroyed by fire in 1894. This smaller version, nicknamed 'The Golden Lady,' stands at the historic ceremonial axis of the fairgrounds."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5800, 41.7855] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "worlds-fair",
+        "type": "marker",
+        "name": "Original Ferris Wheel Site (Midway Plaisance)",
+        "description": "The world's first Ferris Wheel, engineered by George Washington Gale Ferris Jr., stood at the west end of the Midway Plaisance. At 264 feet tall, it was the tallest structure in Chicago. In 2000, construction at this site unearthed original timber and concrete foundations from 1893."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.6050, 41.7920] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "worlds-fair",
+        "type": "marker",
+        "name": "Grand Basin / Court of Honor",
+        "description": "The ceremonial centerpiece of the White City — a formal reflecting basin flanked by the largest Beaux-Arts buildings ever assembled. The basin was designed by Frederick Law Olmsted and oriented to face Lake Michigan, symbolizing Chicago's relationship with the water."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5797, 41.7852] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "history",
+        "type": "marker",
+        "name": "Obama Presidential Center",
+        "description": "Under construction in the southwest corner of Jackson Park, the OPC will be the first presidential center on the South Side of Chicago. Designed by Tod Williams Billie Tsien Architects, it will include a museum, public forum, athletic center, Chicago Public Library branch, and extensive public parkland."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5915, 41.7810] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "history",
+        "type": "marker",
+        "name": "South Shore Cultural Center",
+        "description": "Built in 1906 as the South Shore Country Club, this Moorish/Mediterranean complex was acquired by the Chicago Park District in 1974 after the club barred Black members. It is now a community arts center and historic landmark, and hosted Barack and Michelle Obama's wedding reception in 1992."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5672, 41.7588] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "history",
+        "type": "marker",
+        "name": "63rd Street Beach House",
+        "description": "A historic Chicago Park District beach house at the southern end of Jackson Park, serving Hyde Park and Woodlawn communities since the early 20th century. The beach has been a gathering place for South Side Chicagoans across generations."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5710, 41.7768] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "history",
+        "type": "marker",
+        "name": "East Lagoon Bridge (Music Court Bridge)",
+        "description": "One of Jackson Park's original 1880s iron bridges, this historic span over the East Lagoon was featured in the 1980 film The Blues Brothers. Its North Pond Bridge counterpart also dates to the 1880s and remains in active use."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5832, 41.7873] }
+    }
+
+  ]
+}
