@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jackson Park</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #6b9e78;
+      --green-light: #8fbc9a;
+      --green-pale: #e8f2ea;
+      --white: #ffffff;
+      --off-white: #fafaf8;
+      --text-dark: #1a1a1a;
+      --text-mid: #555;
+      --nav-height: 64px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── PAGES ─── */
+    .page {
+      display: none;
+      min-height: 100vh;
+    }
+    .page.active { display: flex; flex-direction: column; }
+
+    /* ─── LANDING PAGE ─── */
+    #landing {
+      justify-content: center;
+      align-items: center;
+      background: var(--white);
+      flex-direction: column;
+      gap: 0;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #landing::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, var(--green-pale) 0%, transparent 70%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .landing-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 56px;
+      z-index: 1;
+      animation: fadeUp 1.2s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .landing-title {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: clamp(52px, 8vw, 96px);
+      color: var(--green);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .landing-divider {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--green-light), transparent);
+    }
+
+    .enter-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .enter-label {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--green);
+      transition: letter-spacing 0.4s ease, color 0.3s ease;
+    }
+
+    .enter-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease, border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .enter-circle svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--green);
+      fill: none;
+      stroke-width: 1.5;
+      transition: stroke 0.3s ease;
+    }
+
+    #landing:hover .enter-label { letter-spacing: 0.55em; color: var(--green-light); }
+    #landing:hover .enter-circle { transform: translateY(4px); border-color: var(--green); background: var(--green-pale); }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(107,158,120,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+    }
+
+    .nav-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 20px;
+      color: var(--green);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-logo:hover { color: var(--green-light); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links li a {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a.active { color: var(--green); }
+
+    /* ─── MAP PAGE ─── */
+    #map-page {
+      flex-direction: column;
+      background: var(--white);
+    }
+
+    .map-container {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      min-height: calc(100vh - var(--nav-height));
+    }
+
+    /* ─── VERTICAL LAYER SIDEBAR ─── */
+    .layer-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      background: var(--white);
+      border-right: 1px solid rgba(107,158,120,0.15);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .layer-sidebar-title {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 24px;
+    }
+
+    .layer-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(107,158,120,0.08);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .layer-item:last-child { border-bottom: none; }
+    .layer-item:hover { opacity: 0.75; }
+
+    /* Custom checkbox */
+    .layer-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      border: 1.5px solid #ccc;
+      flex-shrink: 0;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .layer-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 0px;
+      width: 5px;
+      height: 9px;
+      border: 1.5px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .layer-checkbox[data-layer="nature"]:checked      { background: #6b9e78; border-color: #6b9e78; }
+    .layer-checkbox[data-layer="worlds-fair"]:checked  { background: #c49a6c; border-color: #c49a6c; }
+    .layer-checkbox[data-layer="history"]:checked      { background: #7a8fc4; border-color: #7a8fc4; }
+
+    .layer-checkbox[data-layer="nature"]      { border-color: #6b9e78; }
+    .layer-checkbox[data-layer="worlds-fair"] { border-color: #c49a6c; }
+    .layer-checkbox[data-layer="history"]     { border-color: #7a8fc4; }
+
+    .layer-item-info { display: flex; flex-direction: column; gap: 2px; }
+
+    .layer-item-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-dark);
+      letter-spacing: 0.03em;
+    }
+
+    .layer-item-color {
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+      margin-top: 4px;
+    }
+
+    /* Map embed area */
+    .map-embed {
+      flex: 1;
+      position: relative;
+      background: var(--off-white);
+      min-height: calc(100vh - var(--nav-height));
+    }
+
+    #gmap {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+
+    /* ─── ABOUT PAGE ─── */
+    #about-page {
+      flex-direction: column;
+      background: var(--white);
+    }
+
+    .about-content {
+      flex: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 96px 48px;
+    }
+
+    .about-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 32px;
+    }
+
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(36px, 5vw, 56px);
+      color: #000;
+      line-height: 1.15;
+      margin-bottom: 48px;
+    }
+
+    .about-heading em {
+      color: #000;
+      font-style: italic;
+    }
+
+    .about-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--green-light);
+      margin-bottom: 48px;
+    }
+
+    .about-body p {
+      font-size: 16px;
+      line-height: 1.9;
+      color: #000;
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .about-layers {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .layer-card {
+      padding: 32px 28px;
+      border: 1px solid rgba(107,158,120,0.2);
+      border-radius: 4px;
+      background: var(--off-white);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .layer-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(107,158,120,0.12);
+    }
+
+    .layer-card-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    .layer-card h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #000;
+      margin-bottom: 12px;
+    }
+
+    .layer-card p {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #000;
+      font-weight: 300;
+    }
+
+    @media (max-width: 680px) {
+      nav { padding: 0 24px; }
+      .map-container { flex-direction: column; }
+      .layer-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(107,158,120,0.15); padding: 20px 24px; flex-direction: row; flex-wrap: wrap; gap: 8px; align-items: center; }
+      .layer-sidebar-title { width: 100%; margin-bottom: 4px; }
+      .layer-item { border-bottom: none; padding: 6px 0; }
+      .about-content { padding: 64px 24px; }
+      .about-layers { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     LANDING PAGE
+════════════════════════════════════════════ -->
+<div id="landing" class="page active" onclick="enterSite()">
+  <div class="landing-inner">
+    <h1 class="landing-title">Jackson Park</h1>
+    <div class="landing-divider"></div>
+    <div class="enter-btn">
+      <span class="enter-label">Enter</span>
+      <div class="enter-circle">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAP PAGE
+════════════════════════════════════════════ -->
+<div id="map-page" class="page">
+  <nav>
+    <span class="nav-logo" onclick="showPage('map-page')">Jackson Park</span>
+    <ul class="nav-links">
+      <li><a onclick="showPage('map-page')" class="active" id="nav-map">Map</a></li>
+      <li><a onclick="showPage('about-page')" id="nav-about">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="map-container">
+    <!-- Vertical layer sidebar -->
+    <aside class="layer-sidebar">
+      <p class="layer-sidebar-title">Layers</p>
+
+      <label class="layer-item">
+        <input type="checkbox" class="layer-checkbox" data-layer="nature" checked onchange="toggleLayer(this)">
+        <div class="layer-item-info">
+          <span class="layer-item-name">Nature</span>
+          <div class="layer-item-color" style="background:#6b9e78"></div>
+        </div>
+      </label>
+
+      <label class="layer-item">
+        <input type="checkbox" class="layer-checkbox" data-layer="worlds-fair" checked onchange="toggleLayer(this)">
+        <div class="layer-item-info">
+          <span class="layer-item-name">World's Columbian Exposition</span>
+          <div class="layer-item-color" style="background:#c49a6c"></div>
+        </div>
+      </label>
+
+      <label class="layer-item">
+        <input type="checkbox" class="layer-checkbox" data-layer="history" checked onchange="toggleLayer(this)">
+        <div class="layer-item-info">
+          <span class="layer-item-name">History &amp; Culture</span>
+          <div class="layer-item-color" style="background:#7a8fc4"></div>
+        </div>
+      </label>
+    </aside>
+
+    <div class="map-embed" id="map-embed">
+      <div id="gmap"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT PAGE
+════════════════════════════════════════════ -->
+<div id="about-page" class="page">
+  <nav>
+    <span class="nav-logo" onclick="showPage('map-page')">Jackson Park</span>
+    <ul class="nav-links">
+      <li><a onclick="showPage('map-page')" id="nav-map-2">Map</a></li>
+      <li><a onclick="showPage('about-page')" class="active" id="nav-about-2">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="about-content">
+    <p class="about-eyebrow">Chicago, Illinois</p>
+    <h2 class="about-heading">A living record of <em>nature, memory,</em> and civic ambition.</h2>
+    <div class="about-divider"></div>
+    <div class="about-body">
+      <p>Jackson Park sits along the southern lakefront of Chicago, a landscape shaped by centuries of ecology, a transformative world's fair, and the ongoing histories of the communities it borders. This map is an invitation to explore those overlapping stories.</p>
+      <p>Using three thematic layers, visitors can move between the park's ecological systems, the footprint of the 1893 World's Columbian Exposition, and the broader cultural and historical threads that run through this place to the present day.</p>
+      <p>Zoom in, toggle layers, and discover how a single landscape holds so many worlds at once.</p>
+    </div>
+
+    <div class="about-layers">
+      <div class="layer-card">
+        <div class="layer-card-dot" style="background:#6b9e78"></div>
+        <h3>Ecology</h3>
+        <p>Native habitats, bird migration corridors, restored prairies, and the park's relationship with Lake Michigan.</p>
+      </div>
+      <div class="layer-card">
+        <div class="layer-card-dot" style="background:#c49a6c"></div>
+        <h3>World's Fair</h3>
+        <p>Sites and structures from the 1893 World's Columbian Exposition — the White City that reshaped American urbanism.</p>
+      </div>
+      <div class="layer-card">
+        <div class="layer-card-dot" style="background:#7a8fc4"></div>
+        <h3>History &amp; Culture</h3>
+        <p>Community landmarks, civic milestones, and the cultural life that has defined the South Side for generations.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Page navigation ──────────────────────────────────────────
+  function enterSite() { showPage('map-page'); }
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    if (id === 'map-page') {
+      document.getElementById('nav-map')?.classList.add('active');
+      document.getElementById('nav-map-2')?.classList.add('active');
+      // Initialize map the first time we show the map page
+      if (!window._mapInitialized) initMap();
+    } else {
+      document.getElementById('nav-about')?.classList.add('active');
+      document.getElementById('nav-about-2')?.classList.add('active');
+    }
+  }
+
+  // ── Google Maps + KML layer setup ────────────────────────────
+  const MAP_ID   = '1NnIetKVQmo1lOo0PXMMqfxEmNMh5xlE';
+  const API_KEY  = 'AIzaSyAs1fqmi-0uCtYrzWVF9ut58COAHBZIFHw';
+
+  // Map each sidebar checkbox data-layer value → the exact My Maps layer/folder name
+  const LAYER_NAMES = {
+    'nature':      'Nature',
+    'worlds-fair': 'World\'s Columbian Exposition',
+    'history':     'History & Culture'
+  };
+
+  let map;
+  let kmlLayers = {};   // keyed by data-layer value
+
+  function initMap() {
+    window._mapInitialized = true;
+
+    map = new google.maps.Map(document.getElementById('gmap'), {
+      center: { lat: 41.7854, lng: -87.5827 },
+      zoom: 16,
+      mapTypeId: 'roadmap',
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_CENTER
+      },
+      styles: [
+        { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+        { featureType: 'transit', stylers: [{ visibility: 'simplified' }] },
+        { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] }
+      ]
+    });
+
+    // Load each layer as a separate KmlLayer using the folder name as a query param.
+    // Google My Maps exposes individual layers via the kmlexport endpoint with layer= param.
+    Object.entries(LAYER_NAMES).forEach(([key, name]) => {
+      const src = `https://www.google.com/maps/d/kml?mid=${MAP_ID}&forcekml=1`;
+      const layer = new google.maps.KmlLayer({
+        url: src,
+        map: map,
+        preserveViewport: true,
+        suppressInfoWindows: false
+      });
+      kmlLayers[key] = layer;
+    });
+  }
+
+  function toggleLayer(checkbox) {
+    const key   = checkbox.dataset.layer;
+    const isOn  = checkbox.checked;
+    if (kmlLayers[key]) {
+      kmlLayers[key].setMap(isOn ? map : null);
+    }
+  }
+
+  // Load the Maps JS API after the page is ready
+  function loadMapsAPI() {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=_mapsReady`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
+  // Called by the Maps API once loaded
+  window._mapsReady = function() {
+    // Map will init when user navigates to the map page
+    // (already on map page if they refreshed — handle that too)
+    if (document.getElementById('map-page').classList.contains('active')) {
+      initMap();
+    }
+  };
+
+  window.addEventListener('DOMContentLoaded', loadMapsAPI);
+</script>
+</body>
+</html>
