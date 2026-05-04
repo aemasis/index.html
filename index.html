@@ -636,10 +636,16 @@
 
   function loadCustomMarkers() {
     Object.entries(KML_SOURCES).forEach(([key, url]) => {
-      fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`)
+      fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`)
         .then(r => r.text())
         .then(text => parseAndPlaceKML(text, key))
-        .catch(err => console.warn(`KML fetch failed for ${key}:`, err));
+        .catch(() => {
+          // fallback to allorigins
+          fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`)
+            .then(r => r.text())
+            .then(text => parseAndPlaceKML(text, key))
+            .catch(err => console.warn(`KML fetch failed for ${key}:`, err));
+        });
     });
   }
 
