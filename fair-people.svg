@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-56 -1 112 114">
+  <rect x="-52" y="3" width="104" height="104" rx="16" fill="#a07840"/>
+  <rect x="-46" y="9" width="92" height="92" rx="12" fill="none" stroke="#f0d9b5" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <rect x="-42" y="13" width="84" height="84" rx="10" fill="#fdf6ec"/>
+  <circle cx="-52" cy="28" r="3" fill="#a07840"/><circle cx="-52" cy="55" r="3" fill="#a07840"/><circle cx="-52" cy="82" r="3" fill="#a07840"/>
+  <circle cx="52" cy="28" r="3" fill="#a07840"/><circle cx="52" cy="55" r="3" fill="#a07840"/><circle cx="52" cy="82" r="3" fill="#a07840"/>
+  <circle cx="-28" cy="3" r="3" fill="#a07840"/><circle cx="0" cy="3" r="3" fill="#a07840"/><circle cx="28" cy="3" r="3" fill="#a07840"/>
+  <circle cx="-28" cy="107" r="3" fill="#a07840"/><circle cx="0" cy="107" r="3" fill="#a07840"/><circle cx="28" cy="107" r="3" fill="#a07840"/>
+  <path d="M-32,92 Q0,86 32,92" fill="none" stroke="#a07840" stroke-width="2"/>
+  <circle cx="-12" cy="30" r="8" fill="#a07840"/>
+  <ellipse cx="-12" cy="23" rx="11" ry="3" fill="#a07840"/>
+  <ellipse cx="-12" cy="21" rx="7" ry="5" fill="#c49a6c"/>
+  <circle cx="-14" cy="29" r="1.5" fill="#fdf6ec"/>
+  <circle cx="-10" cy="29" r="1.5" fill="#fdf6ec"/>
+  <path d="M-12,38 Q-22,52 -24,72 Q-12,68 0,72 Q-2,52 -12,38Z" fill="#a07840"/>
+  <path d="M-16,52 Q-12,48 -8,52 Q-12,56 -16,52Z" fill="#c49a6c" opacity="0.6"/>
+  <path d="M-16,62 Q-12,58 -8,62 Q-12,66 -16,62Z" fill="#c49a6c" opacity="0.6"/>
+  <path d="M-12,40 Q-28,44 -30,56 Q-22,52 -16,48Z" fill="#a07840"/>
+  <path d="M-12,40 Q4,44 6,56 Q-2,52 -8,48Z" fill="#a07840"/>
+  <path d="M-20,72 Q-22,82 -20,92 Q-16,82 -16,72" fill="#a07840"/>
+  <path d="M-8,72 Q-8,82 -6,92 Q-2,82 -4,72" fill="#a07840"/>
+  <circle cx="14" cy="32" r="7" fill="#a07840"/>
+  <rect x="8" y="16" width="12" height="14" rx="1" fill="#a07840"/>
+  <rect x="5" y="28" width="18" height="3" rx="1" fill="#a07840"/>
+  <rect x="9" y="17" width="10" height="12" rx="1" fill="#c49a6c" opacity="0.3"/>
+  <circle cx="12" cy="31" r="1.5" fill="#fdf6ec"/>
+  <circle cx="16" cy="31" r="1.5" fill="#fdf6ec"/>
+  <path d="M14,39 Q22,50 24,74 Q14,70 4,74 Q6,50 14,39Z" fill="#a07840"/>
+  <path d="M14,39 L10,50 L14,48Z" fill="#fdf6ec" opacity="0.4"/>
+  <path d="M14,39 L18,50 L14,48Z" fill="#fdf6ec" opacity="0.4"/>
+  <circle cx="14" cy="56" r="1.5" fill="#c49a6c"/>
+  <circle cx="14" cy="64" r="1.5" fill="#c49a6c"/>
+  <path d="M8,74 Q6,84 8,92 Q12,84 12,74" fill="#a07840"/>
+  <path d="M20,74 Q18,84 20,92 Q24,84 22,74" fill="#a07840"/>
+</svg>

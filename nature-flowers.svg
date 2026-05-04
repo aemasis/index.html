@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-56 3 112 112">
+  <circle cx="0" cy="55" r="52" fill="#4a7a57"/>
+  <circle cx="0" cy="55" r="48" fill="none" stroke="#a5d6a7" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <circle cx="0" cy="55" r="44" fill="#e8f2ea"/>
+  <circle cx="0" cy="9" r="3" fill="#4a7a57"/><circle cx="27" cy="17" r="3" fill="#4a7a57"/><circle cx="46" cy="35" r="3" fill="#4a7a57"/>
+  <circle cx="52" cy="57" r="3" fill="#4a7a57"/><circle cx="44" cy="78" r="3" fill="#4a7a57"/><circle cx="26" cy="94" r="3" fill="#4a7a57"/>
+  <circle cx="0" cy="101" r="3" fill="#4a7a57"/><circle cx="-26" cy="94" r="3" fill="#4a7a57"/><circle cx="-44" cy="78" r="3" fill="#4a7a57"/>
+  <circle cx="-52" cy="57" r="3" fill="#4a7a57"/><circle cx="-46" cy="35" r="3" fill="#4a7a57"/><circle cx="-27" cy="17" r="3" fill="#4a7a57"/>
+  <path d="M0,90 Q-5,78 0,66 Q4,56 0,46" stroke="#4a7a57" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M0,78 Q-16,66 -14,54 Q-6,66 0,74Z" fill="#4a7a57"/>
+  <path d="M-1,76 Q-10,66 -9,58" stroke="#6b9e78" stroke-width="1.2" fill="none"/>
+  <path d="M0,72 Q16,62 14,50 Q6,62 0,68Z" fill="#4a7a57"/>
+  <path d="M1,70 Q10,62 9,54" stroke="#6b9e78" stroke-width="1.2" fill="none"/>
+  <path d="M0,46 Q-8,32 0,22 Q8,32 0,46Z" fill="#4a7a57"/>
+  <path d="M0,46 Q-8,32 0,22 Q8,32 0,46Z" fill="#4a7a57" transform="rotate(45,0,46)"/>
+  <path d="M0,46 Q-8,32 0,22 Q8,32 0,46Z" fill="#4a7a57" transform="rotate(90,0,46)"/>
+  <path d="M0,46 Q-8,32 0,22 Q8,32 0,46Z" fill="#4a7a57" transform="rotate(135,0,46)"/>
+  <path d="M0,46 Q-8,32 0,22 Q8,32 0,46Z" fill="#4a7a57" transform="rotate(180,0,46)"/>
+  <path d="M0,46 Q-8,32 0,22 Q8,32 0,46Z" fill="#4a7a57" transform="rotate(225,0,46)"/>
+  <path d="M0,46 Q-8,32 0,22 Q8,32 0,46Z" fill="#4a7a57" transform="rotate(270,0,46)"/>
+  <path d="M0,46 Q-8,32 0,22 Q8,32 0,46Z" fill="#4a7a57" transform="rotate(315,0,46)"/>
+  <circle cx="0" cy="22" r="2.5" fill="#6b9e78"/><circle cx="0" cy="22" r="2.5" fill="#6b9e78" transform="rotate(45,0,46)"/>
+  <circle cx="0" cy="22" r="2.5" fill="#6b9e78" transform="rotate(90,0,46)"/><circle cx="0" cy="22" r="2.5" fill="#6b9e78" transform="rotate(135,0,46)"/>
+  <circle cx="0" cy="22" r="2.5" fill="#6b9e78" transform="rotate(180,0,46)"/><circle cx="0" cy="22" r="2.5" fill="#6b9e78" transform="rotate(225,0,46)"/>
+  <circle cx="0" cy="22" r="2.5" fill="#6b9e78" transform="rotate(270,0,46)"/><circle cx="0" cy="22" r="2.5" fill="#6b9e78" transform="rotate(315,0,46)"/>
+  <circle cx="0" cy="46" r="10" fill="#e8f2ea"/>
+  <circle cx="0" cy="46" r="6" fill="#4a7a57"/>
+  <circle cx="0" cy="46" r="3" fill="#a5d6a7"/>
+</svg>

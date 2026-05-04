@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -2 120 118">
+  <path d="M0,2 L56,56 L0,110 L-56,56Z" fill="#4a5fa0"/>
+  <path d="M0,10 L48,56 L0,102 L-48,56Z" fill="none" stroke="#b0bce8" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <path d="M0,16 L42,56 L0,96 L-42,56Z" fill="#eef0fa"/>
+  <circle cx="0" cy="2" r="3" fill="#4a5fa0"/><circle cx="28" cy="29" r="3" fill="#4a5fa0"/>
+  <circle cx="56" cy="56" r="3" fill="#4a5fa0"/><circle cx="28" cy="83" r="3" fill="#4a5fa0"/>
+  <circle cx="0" cy="110" r="3" fill="#4a5fa0"/><circle cx="-28" cy="83" r="3" fill="#4a5fa0"/>
+  <circle cx="-56" cy="56" r="3" fill="#4a5fa0"/><circle cx="-28" cy="29" r="3" fill="#4a5fa0"/>
+  <rect x="-26" y="26" width="56" height="68" rx="3" fill="#7a8fc4" opacity="0.5"/>
+  <rect x="-30" y="22" width="30" height="68" rx="3" fill="#eef0fa" stroke="#4a5fa0" stroke-width="2"/>
+  <rect x="0" y="22" width="30" height="68" rx="3" fill="#eef0fa" stroke="#4a5fa0" stroke-width="2"/>
+  <line x1="0" y1="22" x2="0" y2="90" stroke="#4a5fa0" stroke-width="2.5"/>
+  <rect x="-27" y="26" width="13" height="13" rx="2" fill="#4a5fa0"/>
+  <text x="-20" y="37" font-family="Georgia, serif" font-size="11" font-weight="bold" fill="#eef0fa" text-anchor="middle">S</text>
+  <line x1="-27" y1="46" x2="-4" y2="46" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="-27" y1="53" x2="-4" y2="53" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="-27" y1="60" x2="-4" y2="60" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="-27" y1="67" x2="-4" y2="67" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="-27" y1="74" x2="-14" y2="74" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M22,28 Q10,36 8,52 Q14,38 20,34Z" fill="#4a5fa0" opacity="0.7"/>
+  <path d="M22,28 Q30,24 28,36 Q24,32 20,34Z" fill="#b0bce8"/>
+  <line x1="8" y1="52" x2="18" y2="32" stroke="#4a5fa0" stroke-width="0.8" opacity="0.5"/>
+  <line x1="4" y1="60" x2="26" y2="60" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="4" y1="67" x2="26" y2="67" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="4" y1="74" x2="26" y2="74" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="4" y1="81" x2="18" y2="81" stroke="#7a8fc4" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M-28,88 Q-26,96 -18,92 Q-14,90 -12,86" fill="none" stroke="#4a5fa0" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <path d="M22,22 L22,48 L18,44 L14,48 L14,22Z" fill="#4a5fa0"/>
+  <line x1="14" y1="26" x2="22" y2="26" stroke="#eef0fa" stroke-width="1"/>
+</svg>

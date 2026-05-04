@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-56 -1 112 114">
+  <rect x="-52" y="3" width="104" height="104" rx="16" fill="#a07840"/>
+  <rect x="-46" y="9" width="92" height="92" rx="12" fill="none" stroke="#f0d9b5" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <rect x="-42" y="13" width="84" height="84" rx="10" fill="#fdf6ec"/>
+  <circle cx="-52" cy="28" r="3" fill="#a07840"/><circle cx="-52" cy="55" r="3" fill="#a07840"/><circle cx="-52" cy="82" r="3" fill="#a07840"/>
+  <circle cx="52" cy="28" r="3" fill="#a07840"/><circle cx="52" cy="55" r="3" fill="#a07840"/><circle cx="52" cy="82" r="3" fill="#a07840"/>
+  <circle cx="-28" cy="3" r="3" fill="#a07840"/><circle cx="0" cy="3" r="3" fill="#a07840"/><circle cx="28" cy="3" r="3" fill="#a07840"/>
+  <circle cx="-28" cy="107" r="3" fill="#a07840"/><circle cx="0" cy="107" r="3" fill="#a07840"/><circle cx="28" cy="107" r="3" fill="#a07840"/>
+  <g transform="rotate(-6, 0, 55)">
+    <rect x="-18" y="18" width="44" height="58" rx="3" fill="#c49a6c" opacity="0.5"/>
+    <rect x="-24" y="22" width="44" height="58" rx="3" fill="#fdf6ec" stroke="#a07840" stroke-width="2"/>
+    <rect x="-24" y="22" width="44" height="14" rx="3" fill="#a07840"/>
+    <rect x="-24" y="29" width="44" height="7" fill="#a07840"/>
+    <polygon points="0,26 1,29 4,29 2,31 3,34 0,32 -3,34 -2,31 -4,29 -1,29" fill="#f0d9b5"/>
+    <line x1="-18" y1="44" x2="14" y2="44" stroke="#a07840" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="-18" y1="50" x2="14" y2="50" stroke="#a07840" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="-18" y1="56" x2="8" y2="56" stroke="#a07840" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="0" cy="68" r="8" fill="none" stroke="#a07840" stroke-width="1.5"/>
+    <polygon points="0,62 -6,72 6,72" fill="#a07840" opacity="0.4"/>
+    <circle cx="0" cy="64" r="2" fill="#a07840" opacity="0.5"/>
+    <line x1="-18" y1="76" x2="14" y2="76" stroke="#c49a6c" stroke-width="1" stroke-dasharray="2,2"/>
+  </g>
+  <path d="M22,20 L22,50 L16,44 L10,50 L10,20Z" fill="#c49a6c"/>
+  <line x1="10" y1="24" x2="22" y2="24" stroke="#fdf6ec" stroke-width="1"/>
+</svg>
