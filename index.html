@@ -717,6 +717,15 @@
 
     placemarks.forEach(pm => {
       const coordEl = pm.querySelector('Point coordinates');
+      const name = pm.querySelector('name')?.textContent || '';
+      let taxonomy = '';
+      pm.querySelectorAll('Data').forEach(d => {
+        if (d.getAttribute('name') === 'Taxonomy1') {
+          taxonomy = d.querySelector('value')?.textContent?.trim() || '';
+        }
+      });
+      console.log(`Placemark: "${name}" | coords: ${coordEl ? coordEl.textContent.trim().substring(0,30) : 'MISSING'} | Taxonomy1: "${taxonomy}"`);
+
       if (!coordEl) return;
       const [lng, lat] = coordEl.textContent.trim().split(',').map(Number);
       if (!lat || !lng) return;
