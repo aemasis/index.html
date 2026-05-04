@@ -537,8 +537,8 @@
   };
 
   let map, infoWindow;
+  let kmlLayers = {};
   let overlayFeatures = { 'nature': [], 'worlds-fair': [], 'history': [] };
-  let kmlLayer;
 
   // ── Map init ──────────────────────────────────────────────────
   function initMap() {
@@ -562,12 +562,21 @@
 
     infoWindow = new google.maps.InfoWindow();
 
-    // Load My Maps KML on top as base reference layer
-    kmlLayer = new google.maps.KmlLayer({
-      url: `https://www.google.com/maps/d/kml?mid=${MAP_ID}&forcekml=1`,
-      map: map,
-      preserveViewport: true,
-      suppressInfoWindows: false
+    // Load each My Maps layer as a separate toggleable KmlLayer
+    const KML_LAYERS = {
+      'nature':      'mUmHUIDDdAM',
+      'worlds-fair': 'ifekAFkE_Pc',
+      'history':     'XKxhFdGklw4'
+    };
+
+    Object.entries(KML_LAYERS).forEach(([key, lid]) => {
+      const layer = new google.maps.KmlLayer({
+        url: `https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=${MAP_ID}&lid=${lid}`,
+        map: map,
+        preserveViewport: true,
+        suppressInfoWindows: false
+      });
+      kmlLayers[key] = layer;
     });
 
     // Inline GeoJSON data — no separate file needed
@@ -582,24 +591,7 @@
       const style  = LAYER_STYLES[layer];
       const geom   = feature.geometry;
 
-      if (geom.type === 'Polygon') {
-        const coords = geom.coordinates[0].map(([lng, lat]) => ({ lat, lng }));
-        const polygon = new google.maps.Polygon({
-          paths: coords,
-          map: map,
-          strokeColor: style.color,
-          strokeOpacity: 0.85,
-          strokeWeight: 2,
-          fillColor: style.color,
-          fillOpacity: 0.18
-        });
-
-        polygon.addListener('click', e => showInfo(props, e.latLng));
-        polygon.addListener('mouseover', () => polygon.setOptions({ fillOpacity: 0.35 }));
-        polygon.addListener('mouseout',  () => polygon.setOptions({ fillOpacity: 0.18 }));
-        overlayFeatures[layer].push(polygon);
-
-      } else if (geom.type === 'Point') {
+      if (geom.type === 'Point') {
         const [lng, lat] = geom.coordinates;
         const marker = new google.maps.Marker({
           position: { lat, lng },
@@ -649,6 +641,9 @@
   function toggleLayer(checkbox) {
     const key  = checkbox.dataset.layer;
     const isOn = checkbox.checked;
+    // Toggle My Maps KML layer
+    if (kmlLayers[key]) kmlLayers[key].setMap(isOn ? map : null);
+    // Toggle custom GeoJSON markers
     (overlayFeatures[key] || []).forEach(f => f.setMap(isOn ? map : null));
   }
 
