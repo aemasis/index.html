@@ -189,7 +189,7 @@
 
     /* ─── VERTICAL LAYER SIDEBAR ─── */
     .layer-sidebar {
-      width: 220px;
+      width: 240px;
       flex-shrink: 0;
       background: var(--white);
       border-right: 1px solid rgba(107,158,120,0.15);
@@ -262,6 +262,72 @@
       font-weight: 400;
       color: var(--text-dark);
       letter-spacing: 0.03em;
+    }
+
+    /* Sublayer styles */
+    .sublayer-group {
+      display: flex;
+      flex-direction: column;
+      padding-left: 28px;
+      border-bottom: 1px solid rgba(107,158,120,0.08);
+      padding-bottom: 8px;
+      margin-bottom: 4px;
+    }
+
+    .sublayer-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      cursor: pointer;
+    }
+    .sublayer-item:hover { opacity: 0.7; }
+
+    .sublayer-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 2px;
+      border: 1.5px solid #ccc;
+      flex-shrink: 0;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .sublayer-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: -1px;
+      width: 4px;
+      height: 7px;
+      border: 1.5px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .sublayer-checkbox[data-layer="nature"]:checked     { background: #6b9e78; border-color: #6b9e78; }
+    .sublayer-checkbox[data-layer="worlds-fair"]:checked { background: #c49a6c; border-color: #c49a6c; }
+    .sublayer-checkbox[data-layer="history"]:checked    { background: #7a8fc4; border-color: #7a8fc4; }
+    .sublayer-checkbox[data-layer="nature"]      { border-color: #6b9e78; }
+    .sublayer-checkbox[data-layer="worlds-fair"] { border-color: #c49a6c; }
+    .sublayer-checkbox[data-layer="history"]     { border-color: #7a8fc4; }
+
+    .sublayer-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .sublayer-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-mid);
+      letter-spacing: 0.04em;
     }
 
     .layer-item-color {
@@ -427,6 +493,7 @@
     <aside class="layer-sidebar">
       <p class="layer-sidebar-title">Layers</p>
 
+      <!-- NATURE -->
       <label class="layer-item">
         <input type="checkbox" class="layer-checkbox" data-layer="nature" checked onchange="toggleLayer(this)">
         <div class="layer-item-info">
@@ -434,7 +501,30 @@
           <div class="layer-item-color" style="background:#6b9e78"></div>
         </div>
       </label>
+      <div class="sublayer-group">
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="nature" data-sublayer="Birds" checked onchange="toggleSublayer(this)">
+          <img src="icons/nature-birds.svg" class="sublayer-icon" alt="Birds"/>
+          <span class="sublayer-name">Birds</span>
+        </label>
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="nature" data-sublayer="Trees" checked onchange="toggleSublayer(this)">
+          <img src="icons/nature-trees.svg" class="sublayer-icon" alt="Trees"/>
+          <span class="sublayer-name">Trees</span>
+        </label>
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="nature" data-sublayer="Flowers" checked onchange="toggleSublayer(this)">
+          <img src="icons/nature-flowers.svg" class="sublayer-icon" alt="Flowers"/>
+          <span class="sublayer-name">Flowers</span>
+        </label>
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="nature" data-sublayer="Wildlife" checked onchange="toggleSublayer(this)">
+          <img src="icons/nature-wildlife.svg" class="sublayer-icon" alt="Wildlife"/>
+          <span class="sublayer-name">Wildlife</span>
+        </label>
+      </div>
 
+      <!-- WORLD'S FAIR -->
       <label class="layer-item">
         <input type="checkbox" class="layer-checkbox" data-layer="worlds-fair" checked onchange="toggleLayer(this)">
         <div class="layer-item-info">
@@ -442,7 +532,25 @@
           <div class="layer-item-color" style="background:#c49a6c"></div>
         </div>
       </label>
+      <div class="sublayer-group">
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="worlds-fair" data-sublayer="Architecture" checked onchange="toggleSublayer(this)">
+          <img src="icons/fair-architecture.svg" class="sublayer-icon" alt="Architecture"/>
+          <span class="sublayer-name">Architecture</span>
+        </label>
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="worlds-fair" data-sublayer="People" checked onchange="toggleSublayer(this)">
+          <img src="icons/fair-people.svg" class="sublayer-icon" alt="People"/>
+          <span class="sublayer-name">People</span>
+        </label>
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="worlds-fair" data-sublayer="Ephemera" checked onchange="toggleSublayer(this)">
+          <img src="icons/fair-ephemera.svg" class="sublayer-icon" alt="Ephemera"/>
+          <span class="sublayer-name">Ephemera</span>
+        </label>
+      </div>
 
+      <!-- HISTORY & CULTURE -->
       <label class="layer-item">
         <input type="checkbox" class="layer-checkbox" data-layer="history" checked onchange="toggleLayer(this)">
         <div class="layer-item-info">
@@ -450,6 +558,24 @@
           <div class="layer-item-color" style="background:#7a8fc4"></div>
         </div>
       </label>
+      <div class="sublayer-group" style="border-bottom:none;">
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="history" data-sublayer="Landmarks" checked onchange="toggleSublayer(this)">
+          <img src="icons/history-landmarks.svg" class="sublayer-icon" alt="Landmarks"/>
+          <span class="sublayer-name">Landmarks</span>
+        </label>
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="history" data-sublayer="Events" checked onchange="toggleSublayer(this)">
+          <img src="icons/history-events.svg" class="sublayer-icon" alt="Events"/>
+          <span class="sublayer-name">Events</span>
+        </label>
+        <label class="sublayer-item">
+          <input type="checkbox" class="sublayer-checkbox" data-layer="history" data-sublayer="Stories" checked onchange="toggleSublayer(this)">
+          <img src="icons/history-stories.svg" class="sublayer-icon" alt="Stories"/>
+          <span class="sublayer-name">Stories</span>
+        </label>
+      </div>
+
     </aside>
 
     <div class="map-embed" id="map-embed">
@@ -614,12 +740,13 @@
       if (iconUrl) {
         markerOpts.icon = {
           url: iconUrl,
-          scaledSize: new google.maps.Size(40, 40),
-          anchor: new google.maps.Point(20, 20)
+          scaledSize: new google.maps.Size(28, 28),
+          anchor: new google.maps.Point(14, 14)
         };
       }
 
       const marker = new google.maps.Marker(markerOpts);
+      marker._sublayer = sublayer || taxonomy;
       marker.addListener('click', () => {
         const layerLabel = { 'nature': 'Nature', 'worlds-fair': "World's Columbian Exposition", 'history': 'History & Culture' }[layerKey];
         infoWindow.setContent(`
@@ -654,7 +781,31 @@
   function toggleLayer(checkbox) {
     const key  = checkbox.dataset.layer;
     const isOn = checkbox.checked;
-    (overlayFeatures[key] || []).forEach(f => f.setMap(isOn ? map : null));
+    // Toggle all markers for this layer
+    (overlayFeatures[key] || []).forEach(f => {
+      const sub = f._sublayer;
+      const subBox = document.querySelector(`.sublayer-checkbox[data-layer="${key}"][data-sublayer="${sub}"]`);
+      if (!subBox || subBox.checked) f.setMap(isOn ? map : null);
+    });
+    // Cascade to sublayer checkboxes
+    document.querySelectorAll(`.sublayer-checkbox[data-layer="${key}"]`).forEach(cb => {
+      cb.checked = isOn;
+    });
+  }
+
+  function toggleSublayer(checkbox) {
+    const key = checkbox.dataset.layer;
+    const sub = checkbox.dataset.sublayer;
+    const isOn = checkbox.checked;
+    // Show/hide markers matching this sublayer
+    (overlayFeatures[key] || []).forEach(f => {
+      if (f._sublayer === sub) f.setMap(isOn ? map : null);
+    });
+    // Update parent checkbox — checked if at least one sublayer is on
+    const allSubs = document.querySelectorAll(`.sublayer-checkbox[data-layer="${key}"]`);
+    const anyOn   = Array.from(allSubs).some(cb => cb.checked);
+    const parent  = document.querySelector(`.layer-checkbox[data-layer="${key}"]`);
+    if (parent) parent.checked = anyOn;
   }
 
   // ── Load Maps API ─────────────────────────────────────────────
