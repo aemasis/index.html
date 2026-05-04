@@ -764,14 +764,23 @@
   function loadCustomMarkers() {
     Object.entries(KML_SOURCES).forEach(([key, url]) => {
       fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`)
-        .then(r => r.text())
-        .then(text => parseAndPlaceKML(text, key))
-        .catch(() => {
-          // fallback to allorigins
+        .then(r => {
+          console.log(`KML fetch status for ${key}:`, r.status, r.headers.get('content-type'));
+          return r.text();
+        })
+        .then(text => {
+          console.log(`KML text for ${key} (first 300 chars):`, text.substring(0, 300));
+          parseAndPlaceKML(text, key);
+        })
+        .catch(err => {
+          console.warn(`corsproxy failed for ${key}:`, err);
           fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`)
             .then(r => r.text())
-            .then(text => parseAndPlaceKML(text, key))
-            .catch(err => console.warn(`KML fetch failed for ${key}:`, err));
+            .then(text => {
+              console.log(`allorigins KML for ${key} (first 300 chars):`, text.substring(0, 300));
+              parseAndPlaceKML(text, key);
+            })
+            .catch(err2 => console.warn(`Both proxies failed for ${key}:`, err2));
         });
     });
   }
