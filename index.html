@@ -681,12 +681,6 @@
     'World\'s Fair': ICON_BASE + 'fair-architecture.svg'
   };
 
-  const KML_SOURCES = {
-    'nature':      `https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=${MAP_ID}&lid=mUmHUIDDdAM`,
-    'worlds-fair': `https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=${MAP_ID}&lid=ifekAFkE_Pc`,
-    'history':     `https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=${MAP_ID}&lid=XKxhFdGklw4`
-  };
-
   let map, infoWindow;
   let kmlLayers = {};
   let overlayFeatures = { 'nature': [], 'worlds-fair': [], 'history': [] };
@@ -715,83 +709,70 @@
     loadCustomMarkers();
   }
 
-  // ── Parse KML and place custom icon markers ───────────────────
-  function parseAndPlaceKML(kmlText, layerKey) {
-    const parser = new DOMParser();
-    const kml = parser.parseFromString(kmlText, 'text/xml');
-    const placemarks = kml.querySelectorAll('Placemark');
-
-    placemarks.forEach(pm => {
-      const coordEl = pm.querySelector('Point coordinates');
-      const name = pm.querySelector('name')?.textContent || '';
-      let taxonomy = '';
-      pm.querySelectorAll('Data').forEach(d => {
-        if (d.getAttribute('name') === 'Taxonomy1') {
-          taxonomy = d.querySelector('value')?.textContent?.trim() || '';
-        }
-      });
-      console.log(`Placemark: "${name}" | coords: ${coordEl ? coordEl.textContent.trim().substring(0,30) : 'MISSING'} | Taxonomy1: "${taxonomy}"`);
-
-      if (!coordEl) return;
-      const [lng, lat] = coordEl.textContent.trim().split(',').map(Number);
-      if (!lat || !lng) return;
-
-      const rawDesc = pm.querySelector('description')?.textContent || '';
-      // Keep images hosted on GitHub, strip everything else
-      const cleanDesc = rawDesc
-        .replace(/<img[^>]*src="(?!https:\/\/aemasis\.github\.io)[^"]*"[^>]*>/gi, '')
-        .replace(/<br\s*\/?>/gi, ' ')
-        .replace(/<[^>]*>/g, '')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .substring(0, 400);
-
-      const sublayer = taxonomy.includes(' - ') ? taxonomy.split(' - ')[1].trim() : taxonomy;
-      const iconUrl  = ICON_MAP[sublayer] || ICON_MAP[taxonomy] || null;
-      console.log(`→ sublayer: "${sublayer}" | iconUrl: ${iconUrl}`);
-      const style    = LAYER_STYLES[layerKey];
-
-      const markerOpts = { position: { lat, lng }, map, title: name };
-      if (iconUrl) {
-        markerOpts.icon = {
-          url: iconUrl,
-          scaledSize: new google.maps.Size(28, 28),
-          anchor: new google.maps.Point(14, 14)
-        };
-      }
-
-      const marker = new google.maps.Marker(markerOpts);
-      marker._sublayer = sublayer || taxonomy;
-      marker.addListener('click', () => {
-        const layerLabel = { 'nature': 'Nature', 'worlds-fair': "World's Columbian Exposition", 'history': 'History & Culture' }[layerKey];
-        infoWindow.setContent(`
-          <div style="font-family:'DM Sans',sans-serif;max-width:300px;padding:4px 2px;">
-            <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:${style.color};margin-bottom:6px;">${layerLabel}${sublayer ? ' · ' + sublayer : ''}</div>
-            <div style="font-size:15px;font-weight:500;color:#111;margin-bottom:8px;line-height:1.3;">${name}</div>
-            <div style="font-size:12px;color:#444;line-height:1.6;">${cleanDesc}</div>
-          </div>`);
-        infoWindow.open(map, marker);
-      });
-      overlayFeatures[layerKey].push(marker);
-    });
-  }
-
-  const PROXY = 'https://script.google.com/macros/s/AKfycbzKPPO8Jd1PAdQU8EWaDL-lcqcrTnN5EZZKFqJdRDZNYF_bW-e0y4wiI1pAN3CpBqJc/exec';
+  const SHEET_ID = '1-2c6IpFDuHexgujC_7bHaS3RT36uCcUMzM8X9KOD2Bg';
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
   function loadCustomMarkers() {
-    Object.entries(KML_SOURCES).forEach(([key, url]) => {
-      fetch(`${PROXY}?url=${encodeURIComponent(url)}`)
-        .then(r => r.text())
-        .then(text => {
-          if (!text.includes('<kml') && !text.includes('<Placemark')) {
-            console.warn(`Proxy returned non-KML for ${key}:`, text.substring(0, 200));
-            return;
+    fetch(SHEET_URL)
+      .then(r => r.text())
+      .then(text => {
+        // Google wraps the response in a callback — strip it
+        const json = JSON.parse(text.replace(/^.*?({.*})\s*\);?\s*$/, '$1'));
+        const rows = json.table.rows;
+        rows.forEach(row => {
+          const cells = row.c;
+          const name     = cells[0]?.v || '';
+          const lat      = parseFloat(cells[1]?.v);
+          const lng      = parseFloat(cells[2]?.v);
+          const layer    = (cells[3]?.v || '').toLowerCase().trim();
+          const sublayer = (cells[4]?.v || '').trim();
+          const desc     = cells[5]?.v || '';
+          const imgUrl   = cells[6]?.v || '';
+
+          if (!lat || !lng || !layer) return;
+          if (!overlayFeatures[layer]) overlayFeatures[layer] = [];
+
+          const iconUrl = ICON_MAP[sublayer] || null;
+          const style   = LAYER_STYLES[layer] || LAYER_STYLES['nature'];
+
+          const markerOpts = { position: { lat, lng }, map, title: name };
+          if (iconUrl) {
+            markerOpts.icon = {
+              url: iconUrl,
+              scaledSize: new google.maps.Size(28, 28),
+              anchor: new google.maps.Point(14, 14)
+            };
           }
-          console.log(`KML loaded for ${key}`);
-          parseAndPlaceKML(text, key);
-        })
-        .catch(err => console.warn(`Fetch failed for ${key}:`, err));
-    });
+
+          const marker = new google.maps.Marker(markerOpts);
+          marker._sublayer = sublayer;
+
+          marker.addListener('click', () => {
+            const layerLabel = {
+              'nature':      'Nature',
+              'worlds-fair': "World's Columbian Exposition",
+              'history':     'History & Culture'
+            }[layer] || layer;
+
+            const imgHtml = imgUrl
+              ? `<img src="${imgUrl}" style="width:100%;border-radius:4px;margin-bottom:10px;">`
+              : '';
+
+            infoWindow.setContent(`
+              <div style="font-family:'DM Sans',sans-serif;max-width:300px;padding:4px 2px;">
+                ${imgHtml}
+                <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:${style.color};margin-bottom:6px;">${layerLabel}${sublayer ? ' · ' + sublayer : ''}</div>
+                <div style="font-size:15px;font-weight:500;color:#111;margin-bottom:8px;line-height:1.3;">${name}</div>
+                <div style="font-size:12px;color:#444;line-height:1.6;">${desc}</div>
+              </div>`);
+            infoWindow.open(map, marker);
+          });
+
+          overlayFeatures[layer].push(marker);
+        });
+        console.log('Sheet data loaded successfully');
+      })
+      .catch(err => console.warn('Sheet fetch failed:', err));
   }
 
 
