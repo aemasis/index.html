@@ -716,8 +716,9 @@
     fetch(SHEET_URL)
       .then(r => r.text())
       .then(text => {
-        // Google wraps the response in a callback — strip it
-        const json = JSON.parse(text.replace(/^.*?({.*})\s*\);?\s*$/, '$1'));
+        // Google wraps the response — strip the callback wrapper
+        const cleaned = text.replace(/^\/\*.*?\*\/\s*/, '').replace(/^google\.visualization\.Query\.setResponse\(/, '').replace(/\);?\s*$/, '');
+        const json = JSON.parse(cleaned);
         const rows = json.table.rows;
         rows.forEach(row => {
           const cells = row.c;
