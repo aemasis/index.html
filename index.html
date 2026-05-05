@@ -776,40 +776,21 @@
     });
   }
 
+  const PROXY = 'https://script.google.com/macros/s/AKfycbzKPPO8Jd1PAdQU8EWaDL-lcqcrTnN5EZZKFqJdRDZNYF_bW-e0y4wiI1pAN3CpBqJc/exec';
+
   function loadCustomMarkers() {
     Object.entries(KML_SOURCES).forEach(([key, url]) => {
-      const proxies = [
-        `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-        `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-        `https://proxy.cors.sh/${url}`
-      ];
-
-      function tryProxy(index) {
-        if (index >= proxies.length) {
-          console.warn(`All proxies failed for ${key}`);
-          return;
-        }
-        fetch(proxies[index], { headers: { 'x-requested-with': 'XMLHttpRequest' } })
-          .then(r => r.text())
-          .then(text => {
-            let kmlText = text;
-            // allorigins wraps response in JSON
-            try {
-              const json = JSON.parse(text);
-              if (json.contents) kmlText = json.contents;
-            } catch(e) {}
-            if (!kmlText.includes('<kml') && !kmlText.includes('<Placemark')) {
-              console.warn(`Proxy ${index} returned non-KML for ${key}, trying next...`);
-              tryProxy(index + 1);
-              return;
-            }
-            console.log(`Proxy ${index} succeeded for ${key}`);
-            parseAndPlaceKML(kmlText, key);
-          })
-          .catch(() => tryProxy(index + 1));
-      }
-
-      tryProxy(0);
+      fetch(`${PROXY}?url=${encodeURIComponent(url)}`)
+        .then(r => r.text())
+        .then(text => {
+          if (!text.includes('<kml') && !text.includes('<Placemark')) {
+            console.warn(`Proxy returned non-KML for ${key}:`, text.substring(0, 200));
+            return;
+          }
+          console.log(`KML loaded for ${key}`);
+          parseAndPlaceKML(text, key);
+        })
+        .catch(err => console.warn(`Fetch failed for ${key}:`, err));
     });
   }
 
