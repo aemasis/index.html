@@ -691,7 +691,8 @@
 
     map = new google.maps.Map(document.getElementById('gmap'), {
       center: { lat: 41.7854, lng: -87.5827 },
-      zoom: 15,
+      zoom: 16,
+      minZoom: 16,
       mapTypeId: 'roadmap',
       mapTypeControl: true,
       mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
@@ -707,6 +708,16 @@
 
     infoWindow = new google.maps.InfoWindow();
     loadCustomMarkers();
+
+    // Zoom level indicator
+    const zoomDiv = document.createElement('div');
+    zoomDiv.style.cssText = 'background:#fff;padding:4px 10px;margin:10px;border-radius:4px;font-family:DM Sans,sans-serif;font-size:13px;color:#333;border:1px solid #ccc;';
+    zoomDiv.id = 'zoom-indicator';
+    zoomDiv.innerHTML = 'Zoom: 16';
+    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(zoomDiv);
+    map.addListener('zoom_changed', () => {
+      document.getElementById('zoom-indicator').innerHTML = 'Zoom: ' + map.getZoom();
+    });
   }
 
   const SHEET_ID = '1-2c6IpFDuHexgujC_7bHaS3RT36uCcUMzM8X9KOD2Bg';
@@ -729,6 +740,7 @@
           const sublayer = (cells[4]?.v || '').trim();
           const desc     = cells[5]?.v || '';
           const imgUrl   = cells[6]?.v || '';
+          const videoUrl = cells[7]?.v || '';
 
           if (!lat || !lng || !layer) return;
           if (!overlayFeatures[layer]) overlayFeatures[layer] = [];
@@ -761,8 +773,15 @@
                 ).join('')
               : '';
 
+            const videoHtml = videoUrl
+              ? `<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:4px;margin-bottom:8px;">
+                  <iframe src="${videoUrl}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
+                </div>`
+              : '';
+
             infoWindow.setContent(`
               <div style="font-family:'DM Sans',sans-serif;max-width:300px;padding:4px 2px;">
+                ${videoHtml}
                 ${imgHtml}
                 <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:${style.color};margin-bottom:6px;">${layerLabel}${sublayer ? ' · ' + sublayer : ''}</div>
                 <div style="font-size:15px;font-weight:500;color:#111;margin-bottom:8px;line-height:1.3;">${name}</div>
