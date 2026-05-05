@@ -778,11 +778,10 @@
 
   function loadCustomMarkers() {
     Object.entries(KML_SOURCES).forEach(([key, url]) => {
-      // Try multiple proxies in sequence
       const proxies = [
-        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-        `https://thingproxy.freeboard.io/fetch/${url}`,
-        `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
+        `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+        `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+        `https://proxy.cors.sh/${url}`
       ];
 
       function tryProxy(index) {
@@ -790,15 +789,16 @@
           console.warn(`All proxies failed for ${key}`);
           return;
         }
-        fetch(proxies[index])
+        fetch(proxies[index], { headers: { 'x-requested-with': 'XMLHttpRequest' } })
           .then(r => r.text())
           .then(text => {
-            // allorigins wraps in JSON — unwrap if needed
             let kmlText = text;
-            if (text.startsWith('{"contents"')) {
-              kmlText = JSON.parse(text).contents;
-            }
-            if (!kmlText.includes('<kml')) {
+            // allorigins wraps response in JSON
+            try {
+              const json = JSON.parse(text);
+              if (json.contents) kmlText = json.contents;
+            } catch(e) {}
+            if (!kmlText.includes('<kml') && !kmlText.includes('<Placemark')) {
               console.warn(`Proxy ${index} returned non-KML for ${key}, trying next...`);
               tryProxy(index + 1);
               return;
