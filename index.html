@@ -893,7 +893,9 @@
               : '';
 
             const audioHtml = audioUrl
-              ? `<audio controls style="width:100%;margin-bottom:8px;"><source src="${audioUrl}">Your browser does not support audio.</audio>`
+              ? audioUrl.split(',').map(url => url.trim()).filter(Boolean).map(url =>
+                  `<audio controls style="width:100%;margin-bottom:6px;"><source src="${url}">Your browser does not support audio.</audio>`
+                ).join('')
               : '';
 
             infoWindow.setContent(`
