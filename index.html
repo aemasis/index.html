@@ -504,22 +504,22 @@
       <div class="sublayer-group">
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="nature" data-sublayer="Birds" checked onchange="toggleSublayer(this)">
-          <img src="icons/nature-birds.svg" class="sublayer-icon" alt="Birds"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/nature-birds.svg" class="sublayer-icon" alt="Birds"/>
           <span class="sublayer-name">Birds</span>
         </label>
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="nature" data-sublayer="Trees" checked onchange="toggleSublayer(this)">
-          <img src="icons/nature-trees.svg" class="sublayer-icon" alt="Trees"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/nature-trees.svg" class="sublayer-icon" alt="Trees"/>
           <span class="sublayer-name">Trees</span>
         </label>
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="nature" data-sublayer="Flowers" checked onchange="toggleSublayer(this)">
-          <img src="icons/nature-flowers.svg" class="sublayer-icon" alt="Flowers"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/nature-flowers.svg" class="sublayer-icon" alt="Flowers"/>
           <span class="sublayer-name">Flowers</span>
         </label>
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="nature" data-sublayer="Wildlife" checked onchange="toggleSublayer(this)">
-          <img src="icons/nature-wildlife.svg" class="sublayer-icon" alt="Wildlife"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/nature-wildlife.svg" class="sublayer-icon" alt="Wildlife"/>
           <span class="sublayer-name">Wildlife</span>
         </label>
       </div>
@@ -535,17 +535,17 @@
       <div class="sublayer-group">
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="worlds-fair" data-sublayer="Architecture" checked onchange="toggleSublayer(this)">
-          <img src="icons/fair-architecture.svg" class="sublayer-icon" alt="Architecture"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/fair-architecture.svg" class="sublayer-icon" alt="Architecture"/>
           <span class="sublayer-name">Architecture</span>
         </label>
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="worlds-fair" data-sublayer="People" checked onchange="toggleSublayer(this)">
-          <img src="icons/fair-people.svg" class="sublayer-icon" alt="People"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/fair-people.svg" class="sublayer-icon" alt="People"/>
           <span class="sublayer-name">People</span>
         </label>
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="worlds-fair" data-sublayer="Ephemera" checked onchange="toggleSublayer(this)">
-          <img src="icons/fair-ephemera.svg" class="sublayer-icon" alt="Ephemera"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/fair-ephemera.svg" class="sublayer-icon" alt="Ephemera"/>
           <span class="sublayer-name">Ephemera</span>
         </label>
       </div>
@@ -561,17 +561,17 @@
       <div class="sublayer-group" style="border-bottom:none;">
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="history" data-sublayer="Landmarks" checked onchange="toggleSublayer(this)">
-          <img src="icons/history-landmarks.svg" class="sublayer-icon" alt="Landmarks"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/history-landmarks.svg" class="sublayer-icon" alt="Landmarks"/>
           <span class="sublayer-name">Landmarks</span>
         </label>
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="history" data-sublayer="Events" checked onchange="toggleSublayer(this)">
-          <img src="icons/history-events.svg" class="sublayer-icon" alt="Events"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/history-events.svg" class="sublayer-icon" alt="Events"/>
           <span class="sublayer-name">Events</span>
         </label>
         <label class="sublayer-item">
           <input type="checkbox" class="sublayer-checkbox" data-layer="history" data-sublayer="Stories" checked onchange="toggleSublayer(this)">
-          <img src="icons/history-stories.svg" class="sublayer-icon" alt="Stories"/>
+          <img src="https://aemasis.github.io/jacksonpark/icons/history-stories.svg" class="sublayer-icon" alt="Stories"/>
           <span class="sublayer-name">Stories</span>
         </label>
       </div>
@@ -662,17 +662,23 @@
     'history':     { color: '#7a8fc4', markerColor: '#4a5fa0' }
   };
 
+  const ICON_BASE = 'https://aemasis.github.io/jacksonpark/icons/';
+
   const ICON_MAP = {
-    'Birds':        'icons/nature-birds.svg',
-    'Trees':        'icons/nature-trees.svg',
-    'Flowers':      'icons/nature-flowers.svg',
-    'Wildlife':     'icons/nature-wildlife.svg',
-    'Architecture': 'icons/fair-architecture.svg',
-    'People':       'icons/fair-people.svg',
-    'Ephemera':     'icons/fair-ephemera.svg',
-    'Landmarks':    'icons/history-landmarks.svg',
-    'Events':       'icons/history-events.svg',
-    'Stories':      'icons/history-stories.svg'
+    'Birds':        ICON_BASE + 'nature-birds.svg',
+    'Trees':        ICON_BASE + 'nature-trees.svg',
+    'Flowers':      ICON_BASE + 'nature-flowers.svg',
+    'Wildlife':     ICON_BASE + 'nature-wildlife.svg',
+    'Architecture': ICON_BASE + 'fair-architecture.svg',
+    'People':       ICON_BASE + 'fair-people.svg',
+    'Ephemera':     ICON_BASE + 'fair-ephemera.svg',
+    'Landmarks':    ICON_BASE + 'history-landmarks.svg',
+    'Events':       ICON_BASE + 'history-events.svg',
+    'Event':        ICON_BASE + 'history-events.svg',
+    'Stories':      ICON_BASE + 'history-stories.svg',
+    'History & Culture': ICON_BASE + 'history-landmarks.svg',
+    'Nature':       ICON_BASE + 'nature-wildlife.svg',
+    'World\'s Fair': ICON_BASE + 'fair-architecture.svg'
   };
 
   const KML_SOURCES = {
@@ -731,9 +737,18 @@
       if (!lat || !lng) return;
 
       const rawDesc = pm.querySelector('description')?.textContent || '';
-      const cleanDesc = rawDesc.replace(/<img[^>]*>/gi,'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().substring(0, 240);
+      // Keep images hosted on GitHub, strip everything else
+      const cleanDesc = rawDesc
+        .replace(/<img[^>]*src="(?!https:\/\/aemasis\.github\.io)[^"]*"[^>]*>/gi, '')
+        .replace(/<br\s*\/?>/gi, ' ')
+        .replace(/<[^>]*>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .substring(0, 400);
 
       const sublayer = taxonomy.includes(' - ') ? taxonomy.split(' - ')[1].trim() : taxonomy;
+      const iconUrl  = ICON_MAP[sublayer] || ICON_MAP[taxonomy] || null;
+      console.log(`→ sublayer: "${sublayer}" | iconUrl: ${iconUrl}`);
       const iconUrl  = ICON_MAP[sublayer] || ICON_MAP[taxonomy] || null;
       const style    = LAYER_STYLES[layerKey];
 
@@ -751,7 +766,7 @@
       marker.addListener('click', () => {
         const layerLabel = { 'nature': 'Nature', 'worlds-fair': "World's Columbian Exposition", 'history': 'History & Culture' }[layerKey];
         infoWindow.setContent(`
-          <div style="font-family:'DM Sans',sans-serif;max-width:280px;padding:4px 2px;">
+          <div style="font-family:'DM Sans',sans-serif;max-width:300px;padding:4px 2px;">
             <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:${style.color};margin-bottom:6px;">${layerLabel}${sublayer ? ' · ' + sublayer : ''}</div>
             <div style="font-size:15px;font-weight:500;color:#111;margin-bottom:8px;line-height:1.3;">${name}</div>
             <div style="font-size:12px;color:#444;line-height:1.6;">${cleanDesc}</div>
