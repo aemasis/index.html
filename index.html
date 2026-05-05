@@ -447,15 +447,55 @@
       font-weight: 300;
     }
 
-    @media (max-width: 680px) {
-      nav { padding: 0 24px; }
-      .map-container { flex-direction: column; }
-      .layer-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(107,158,120,0.15); padding: 20px 24px; flex-direction: row; flex-wrap: wrap; gap: 8px; align-items: center; }
-      .layer-sidebar-title { width: 100%; margin-bottom: 4px; }
-      .layer-item { border-bottom: none; padding: 6px 0; }
-      .about-content { padding: 64px 24px; }
-      .about-layers { grid-template-columns: 1fr; }
+    /* ─── DIRECTORY PAGE ─── */
+    #directory-page { flex-direction: column; background: var(--white); }
+
+    .directory-content { flex: 1; max-width: 900px; margin: 0 auto; padding: 64px 48px; width: 100%; }
+
+    .directory-eyebrow { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--green); margin-bottom: 32px; }
+
+    .directory-heading { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(32px, 4vw, 48px); color: #000; margin-bottom: 48px; }
+
+    .directory-section { margin-bottom: 48px; }
+
+    .directory-section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      margin-bottom: 16px;
     }
+
+    .directory-section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    .directory-section-title { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: #000; }
+
+    .directory-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .directory-item:hover { opacity: 0.7; }
+    .directory-item:last-child { border-bottom: none; }
+
+    .directory-item-icon { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; }
+
+    .directory-item-info { flex: 1; }
+
+    .directory-item-name { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400; color: #000; margin-bottom: 3px; }
+
+    .directory-item-sub { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-mid); }
+
+    .directory-item-desc { font-size: 12px; color: var(--text-mid); line-height: 1.6; margin-top: 4px; }
+
+    .directory-arrow { font-size: 16px; color: #ccc; margin-top: 4px; flex-shrink: 0; }
+
+    @media (max-width: 680px) { .directory-content { padding: 48px 24px; } }
   </style>
 </head>
 <body>
@@ -484,6 +524,7 @@
     <span class="nav-logo" onclick="showPage('map-page')">Jackson Park</span>
     <ul class="nav-links">
       <li><a onclick="showPage('map-page')" class="active" id="nav-map">Map</a></li>
+      <li><a onclick="showPage('directory-page')" id="nav-directory">Directory</a></li>
       <li><a onclick="showPage('about-page')" id="nav-about">About</a></li>
     </ul>
   </nav>
@@ -592,6 +633,7 @@
     <span class="nav-logo" onclick="showPage('map-page')">Jackson Park</span>
     <ul class="nav-links">
       <li><a onclick="showPage('map-page')" id="nav-map-2">Map</a></li>
+      <li><a onclick="showPage('directory-page')" id="nav-directory-2">Directory</a></li>
       <li><a onclick="showPage('about-page')" class="active" id="nav-about-2">About</a></li>
     </ul>
   </nav>
@@ -626,7 +668,28 @@
   </div>
 </div>
 
-<script>
+<!-- ═══════════════════════════════════════════
+     DIRECTORY PAGE
+════════════════════════════════════════════ -->
+<div id="directory-page" class="page">
+  <nav>
+    <span class="nav-logo" onclick="showPage('map-page')">Jackson Park</span>
+    <ul class="nav-links">
+      <li><a onclick="showPage('map-page')" id="nav-map-3">Map</a></li>
+      <li><a onclick="showPage('directory-page')" class="active" id="nav-directory-3">Directory</a></li>
+      <li><a onclick="showPage('about-page')" id="nav-about-3">About</a></li>
+    </ul>
+  </nav>
+  <div class="directory-content">
+    <p class="directory-eyebrow">All Sites</p>
+    <h2 class="directory-heading">Site Directory</h2>
+    <div id="directory-list">
+      <p style="color:var(--text-mid);font-size:14px;">Loading...</p>
+    </div>
+  </div>
+</div>
+
+
   // ── Inline map data ───────────────────────────────────────────
   const MAP_DATA = {"type":"FeatureCollection","features":[]};
 
@@ -642,14 +705,63 @@
     window.scrollTo(0, 0);
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     if (id === 'map-page') {
-      document.getElementById('nav-map')?.classList.add('active');
-      document.getElementById('nav-map-2')?.classList.add('active');
-      // Only init if the Maps API has already loaded; otherwise _mapsReady will handle it
+      document.querySelectorAll('#nav-map, #nav-map-2, #nav-map-3').forEach(el => el?.classList.add('active'));
       if (!window._mapInitialized && _mapsApiReady) initMap();
+    } else if (id === 'directory-page') {
+      document.querySelectorAll('#nav-directory, #nav-directory-2, #nav-directory-3').forEach(el => el?.classList.add('active'));
+      buildDirectory();
     } else {
-      document.getElementById('nav-about')?.classList.add('active');
-      document.getElementById('nav-about-2')?.classList.add('active');
+      document.querySelectorAll('#nav-about, #nav-about-2, #nav-about-3').forEach(el => el?.classList.add('active'));
     }
+  }
+
+  // ── Build directory from loaded markers ───────────────────────
+  const LAYER_CONFIG = {
+    'nature':      { label: 'Nature',                      color: '#6b9e78' },
+    'worlds-fair': { label: "World's Columbian Exposition", color: '#c49a6c' },
+    'history':     { label: 'History & Culture',           color: '#7a8fc4' }
+  };
+
+  function buildDirectory() {
+    const container = document.getElementById('directory-list');
+    let html = '';
+    Object.entries(LAYER_CONFIG).forEach(([key, cfg]) => {
+      const markers = overlayFeatures[key] || [];
+      if (!markers.length) return;
+      html += `
+        <div class="directory-section">
+          <div class="directory-section-header">
+            <div class="directory-section-dot" style="background:${cfg.color}"></div>
+            <span class="directory-section-title">${cfg.label}</span>
+          </div>`;
+      markers.forEach((marker, i) => {
+        const name    = marker.title || 'Unnamed';
+        const sub     = marker._sublayer || '';
+        const iconUrl = ICON_MAP[sub] || '';
+        html += `
+          <div class="directory-item" onclick="goToMarker('${key}',${i})">
+            ${iconUrl ? `<img src="${iconUrl}" class="directory-item-icon" alt="${sub}"/>` : '<div class="directory-item-icon"></div>'}
+            <div class="directory-item-info">
+              <div class="directory-item-name">${name}</div>
+              ${sub ? `<div class="directory-item-sub">${sub}</div>` : ''}
+            </div>
+            <div class="directory-arrow">›</div>
+          </div>`;
+      });
+      html += `</div>`;
+    });
+    container.innerHTML = html || '<p style="color:var(--text-mid);font-size:14px;">No sites loaded yet — visit the map first.</p>';
+  }
+
+  function goToMarker(layerKey, index) {
+    const marker = (overlayFeatures[layerKey] || [])[index];
+    if (!marker) return;
+    showPage('map-page');
+    setTimeout(() => {
+      map.panTo(marker.getPosition());
+      map.setZoom(17);
+      google.maps.event.trigger(marker, 'click');
+    }, 100);
   }
 
   // ── Config ────────────────────────────────────────────────────
@@ -802,13 +914,7 @@
   function toggleLayer(checkbox) {
     const key  = checkbox.dataset.layer;
     const isOn = checkbox.checked;
-    // Toggle all markers for this layer
-    (overlayFeatures[key] || []).forEach(f => {
-      const sub = f._sublayer;
-      const subBox = document.querySelector(`.sublayer-checkbox[data-layer="${key}"][data-sublayer="${sub}"]`);
-      if (!subBox || subBox.checked) f.setMap(isOn ? map : null);
-    });
-    // Cascade to sublayer checkboxes
+    (overlayFeatures[key] || []).forEach(f => f.setMap(isOn ? map : null));
     document.querySelectorAll(`.sublayer-checkbox[data-layer="${key}"]`).forEach(cb => {
       cb.checked = isOn;
     });
@@ -818,11 +924,9 @@
     const key = checkbox.dataset.layer;
     const sub = checkbox.dataset.sublayer;
     const isOn = checkbox.checked;
-    // Show/hide markers matching this sublayer
     (overlayFeatures[key] || []).forEach(f => {
       if (f._sublayer === sub) f.setMap(isOn ? map : null);
     });
-    // Update parent checkbox — checked if at least one sublayer is on
     const allSubs = document.querySelectorAll(`.sublayer-checkbox[data-layer="${key}"]`);
     const anyOn   = Array.from(allSubs).some(cb => cb.checked);
     const parent  = document.querySelector(`.layer-checkbox[data-layer="${key}"]`);
