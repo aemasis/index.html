@@ -778,25 +778,38 @@
 
   function loadCustomMarkers() {
     Object.entries(KML_SOURCES).forEach(([key, url]) => {
-      fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`)
-        .then(r => {
-          console.log(`KML fetch status for ${key}:`, r.status, r.headers.get('content-type'));
-          return r.text();
-        })
-        .then(text => {
-          console.log(`KML text for ${key} (first 300 chars):`, text.substring(0, 300));
-          parseAndPlaceKML(text, key);
-        })
-        .catch(err => {
-          console.warn(`corsproxy failed for ${key}:`, err);
-          fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`)
-            .then(r => r.text())
-            .then(text => {
-              console.log(`allorigins KML for ${key} (first 300 chars):`, text.substring(0, 300));
-              parseAndPlaceKML(text, key);
-            })
-            .catch(err2 => console.warn(`Both proxies failed for ${key}:`, err2));
-        });
+      // Try multiple proxies in sequence
+      const proxies = [
+        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+        `https://thingproxy.freeboard.io/fetch/${url}`,
+        `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
+      ];
+
+      function tryProxy(index) {
+        if (index >= proxies.length) {
+          console.warn(`All proxies failed for ${key}`);
+          return;
+        }
+        fetch(proxies[index])
+          .then(r => r.text())
+          .then(text => {
+            // allorigins wraps in JSON — unwrap if needed
+            let kmlText = text;
+            if (text.startsWith('{"contents"')) {
+              kmlText = JSON.parse(text).contents;
+            }
+            if (!kmlText.includes('<kml')) {
+              console.warn(`Proxy ${index} returned non-KML for ${key}, trying next...`);
+              tryProxy(index + 1);
+              return;
+            }
+            console.log(`Proxy ${index} succeeded for ${key}`);
+            parseAndPlaceKML(kmlText, key);
+          })
+          .catch(() => tryProxy(index + 1));
+      }
+
+      tryProxy(0);
     });
   }
 
