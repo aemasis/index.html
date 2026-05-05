@@ -749,7 +749,6 @@
       const sublayer = taxonomy.includes(' - ') ? taxonomy.split(' - ')[1].trim() : taxonomy;
       const iconUrl  = ICON_MAP[sublayer] || ICON_MAP[taxonomy] || null;
       console.log(`→ sublayer: "${sublayer}" | iconUrl: ${iconUrl}`);
-      const iconUrl  = ICON_MAP[sublayer] || ICON_MAP[taxonomy] || null;
       const style    = LAYER_STYLES[layerKey];
 
       const markerOpts = { position: { lat, lng }, map, title: name };
